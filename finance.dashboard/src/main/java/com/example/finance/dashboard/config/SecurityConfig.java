@@ -42,7 +42,10 @@ public class SecurityConfig {
                         // Public APIs
                         .requestMatchers("/api/auth/**").permitAll()
 
-                        // Admin only
+                        // log-in user
+                        .requestMatchers("/api/users/me/**").authenticated()
+
+                                // Admin only
                         .requestMatchers("/api/users/**").hasRole("ADMIN")
 
                         // Analyst + Admin
