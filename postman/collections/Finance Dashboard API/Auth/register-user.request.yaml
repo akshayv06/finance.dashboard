@@ -1,0 +1,39 @@
+$kind: http-request
+name: Register User
+order: 1000
+method: POST
+url: '{{baseUrl}}/api/auth/register'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "password": "password123",
+      "role": "ROLE_ANALYST"
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status code is 2xx", function () {
+          pm.response.to.be.success;
+      });
+      pm.test("Response time is less than 2000ms", function () {
+          pm.expect(pm.response.responseTime).to.be.below(2000);
+      });
+      pm.test("Response has token", function () {
+          var json = pm.response.json();
+          pm.expect(json).to.have.property("token");
+      });
+      // Capture token and userId into environment
+      var json = pm.response.json();
+      if (json.token) {
+          pm.environment.set("accessToken", json.token);
+      }
+      if (json.userId) {
+          pm.environment.set("userId", json.userId);
+      }

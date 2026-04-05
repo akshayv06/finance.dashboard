@@ -1,0 +1,18 @@
+$kind: collection
+name: Finance Dashboard API
+description: |-
+  Postman collection for the Finance Dashboard Spring Boot API.
+  Covers Auth, User management, and Financial Records endpoints.
+  Use the "Finance Dashboard" environment for baseUrl and accessToken variables.
+auth:
+  type: bearer
+  credentials:
+    - key: token
+      value: '{{accessToken}}'
+variables:
+  - key: baseUrl
+    value: 'http://localhost:8080'
+    description: Base URL of the Finance Dashboard API server
+  - key: accessToken
+    value: ''
+    description: JWT Bearer token obtained after login or register

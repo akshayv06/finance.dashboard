@@ -1,0 +1,40 @@
+$kind: http-request
+name: Create Financial Record
+order: 1000
+method: POST
+url: '{{baseUrl}}/api/records'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "amount": 1500.00,
+      "type": "INCOME",
+      "category": "Salary",
+      "date": "2025-01-15",
+      "description": "Monthly salary payment"
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status code is 2xx", function () {
+          pm.response.to.be.success;
+      });
+      pm.test("Response time is less than 2000ms", function () {
+          pm.expect(pm.response.responseTime).to.be.below(2000);
+      });
+      pm.test("Response has record fields", function () {
+          var json = pm.response.json();
+          pm.expect(json).to.have.property("id");
+          pm.expect(json).to.have.property("amount");
+          pm.expect(json).to.have.property("type");
+          pm.expect(json).to.have.property("category");
+      });
+      // Capture record id for use in delete request
+      var json = pm.response.json();
+      if (json.id) {
+          pm.environment.set("recordId", json.id);
+      }

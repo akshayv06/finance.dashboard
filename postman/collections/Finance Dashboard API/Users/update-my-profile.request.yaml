@@ -1,0 +1,31 @@
+$kind: http-request
+name: Update My Profile
+order: 3000
+method: PUT
+url: '{{baseUrl}}/api/users/me'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "name": "John Doe Updated",
+      "email": "john.updated@example.com",
+      "password": "newpassword123"
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status code is 2xx", function () {
+          pm.response.to.be.success;
+      });
+      pm.test("Response time is less than 2000ms", function () {
+          pm.expect(pm.response.responseTime).to.be.below(2000);
+      });
+      pm.test("Response has updated user fields", function () {
+          var json = pm.response.json();
+          pm.expect(json).to.have.property("email");
+          pm.expect(json).to.have.property("name");
+      });

@@ -1,0 +1,4 @@
+$kind: collection
+name: User APIs
+description: User management endpoints. Requires Bearer token authentication. Admin-only endpoints are noted in the request descriptions.
+order: 2000

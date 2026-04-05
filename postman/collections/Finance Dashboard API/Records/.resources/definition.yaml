@@ -1,0 +1,4 @@
+$kind: collection
+name: Financial Records APIs
+description: Financial record CRUD and analytics endpoints. Requires Bearer token. Role-based access — ADMIN can create/delete, ANALYST can create, all roles can read.
+order: 3000

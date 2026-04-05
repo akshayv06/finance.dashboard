@@ -1,0 +1,14 @@
+name: Finance Dashboard
+values:
+  - key: baseUrl
+    value: 'http://localhost:8080'
+    enabled: true
+    type: default
+  - key: accessToken
+    value: ''
+    enabled: true
+    type: default
+  - key: userId
+    value: ''
+    enabled: true
+    type: default

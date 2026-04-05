@@ -1,0 +1,4 @@
+$kind: collection
+name: Auth APIs
+description: Authentication endpoints for registering and logging in users. Tokens are automatically captured into the accessToken environment variable.
+order: 1000

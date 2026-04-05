@@ -1,0 +1,21 @@
+$kind: http-request
+name: Delete Financial Record
+order: 3000
+method: DELETE
+url: '{{baseUrl}}/api/records/{{recordId}}'
+pathVariables:
+  - key: recordId
+    value: '{{recordId}}'
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status code is 2xx", function () {
+          pm.response.to.be.success;
+      });
+      pm.test("Response time is less than 2000ms", function () {
+          pm.expect(pm.response.responseTime).to.be.below(2000);
+      });
+      pm.test("Response confirms deletion", function () {
+          pm.expect(pm.response.text()).to.include("deleted");
+      });

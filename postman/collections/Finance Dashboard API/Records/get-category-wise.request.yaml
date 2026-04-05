@@ -1,0 +1,19 @@
+$kind: http-request
+name: Get Category-Wise Expenses
+order: 6000
+method: GET
+url: '{{baseUrl}}/api/records/category-wise'
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status code is 2xx", function () {
+          pm.response.to.be.success;
+      });
+      pm.test("Response time is less than 2000ms", function () {
+          pm.expect(pm.response.responseTime).to.be.below(2000);
+      });
+      pm.test("Response is an array", function () {
+          var json = pm.response.json();
+          pm.expect(json).to.be.an("array");
+      });
