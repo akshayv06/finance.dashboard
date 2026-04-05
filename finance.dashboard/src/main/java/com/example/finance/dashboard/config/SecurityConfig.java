@@ -39,6 +39,14 @@ public class SecurityConfig {
         http.csrf(csrf->csrf.disable())
                 .authorizeHttpRequests(auth -> auth
 
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/v3/api-docs/**",     // or "/api-docs/**"
+                                "/swagger/**",         // if you keep custom swagger-ui.path=/swagger
+                                "/webjars/**"          // sometimes needed for swagger assets
+                        ).permitAll()
+
                         // Public APIs
                         .requestMatchers("/api/auth/**").permitAll()
 

@@ -6,6 +6,8 @@ import com.example.finance.dashboard.model.FinancialRecord;
 import com.example.finance.dashboard.model.User;
 import com.example.finance.dashboard.repository.UserRepository;
 import com.example.finance.dashboard.service.FinancialRecordService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
+@Tag(name = "Financial APIs", description = "Financial record operations")
 @RestController
 @RequestMapping("/api/records")
 @RequiredArgsConstructor
@@ -34,6 +37,7 @@ public class FinancialRecordController {
     }
 
     // ✅ CREATE RECORD
+    @Operation(summary = "Create financial record")
     @PreAuthorize("hasAnyRole('ADMIN','ANALYST')")
     @PostMapping
     public ResponseEntity<FinancialRecordResponse> createRecord(
@@ -56,6 +60,7 @@ public class FinancialRecordController {
     }
 
     // ✅ GET USER RECORDS
+    @Operation(summary = "Get user records")
     @PreAuthorize("hasAnyRole('ADMIN','ANALYST','VIEWER')")
     @GetMapping
     public ResponseEntity<List<FinancialRecordResponse>> getRecords(Authentication authentication) {
@@ -81,6 +86,7 @@ public class FinancialRecordController {
     }
 
     // ✅ DASHBOARD SUMMARY
+    @Operation(summary = "Get dashboard summary")
     @PreAuthorize("hasAnyRole('ADMIN','ANALYST','VIEWER')")
     @GetMapping("/summary")
     public ResponseEntity<SummaryResponse> getSummary(Authentication authentication) {
